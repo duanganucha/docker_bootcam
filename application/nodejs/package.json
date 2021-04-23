@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "express": "4.16.4",
+    "nodemon" : "2.0.7",
+    "mongodb" : "3.4.7"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

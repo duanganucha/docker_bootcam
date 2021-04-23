@@ -1,0 +1,99 @@
+docker run hello-world   
+docker rm asdlfjsfaljk
+docker stop asldjflaksjdflk
+
+docker run -d --name -p 9000:80 ngix
+
+docker images
+docker image ls
+
+docker pull mysql:5.7
+docker pull wordpress 
+docker pull phpmyadmin/phpmyadmin 
+docker network create wordpress
+
+// docker run --name mysql -e MYSQL_ROOT_PASSWORD=1111 -d mysql:5.7
+docker run --name pma -p 8888:80 -e PMA_ARBITRARY=1 -d phpmyadmin/phpmyadmin
+docker run --name mysql --network wordpress -e MYSQL_ROOT_PASSWORD=1111 -e MYSQL_DATABASE=wordpress_db -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress -d mysql:5.7
+docker run -d --name wordpress --network wordpress -p 888:80 -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=wordpress -e WORDPRESS_DB_NAME=wordpress_db wordpress
+
+// docker run -p 888:80 wordpress   // ทดสอบ
+// connect phpmyadmin and mysql
+
+docker network connect wordpress mysql
+docker network connect wordpress pma
+dock network inspect wordpress
+
+//-->> localhost:8888
+// server mysql
+// Username root
+// password 1111
+
+// docker run --name wordpress -p 888:80 --network wordpress -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=1111 -d wordpress
+
+docker exec -it  pma sh      
+apk update 
+apk add bash
+exit
+exit
+
+// -------------- สร้าง volume ใส container
+docker volume ls
+
+docker volume create mysql_volume
+docker volume rm mysql_volume
+docker container inspect wordpress
+docker container inspect mysql
+
+docker volume create mysql_volume
+docker volume create wp_volume
+docker network create wordpress02
+
+docker run -d --name mysql02 --network wordpress02 -v mysql_volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1111  mysql:5.7
+docker run -d --name wordpress02 --network wordpress02 -v wp_volume:/var/www/html -e MYSQL_DB_HOST=mysql02 -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=1111 -p 889:80 wordpress
+
+
+
+
+// -------------- สร้าง volume ใส host หรือ เครื่องเรา
+
+docker network create wordpress03
+docker run -d --name mysql03 --network wordpress03 -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/wordpress/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1111  mysql:5.7
+docker run -d --name wordpress03 --network wordpress03 -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/wordpress/wp:/var/www/html -e MYSQL_DB_HOST=mysql03 -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=1111 -p 890:80 wordpress
+
+
+//Dockerfile
+docker build .
+docker images
+//Dockerfile
+docker run -p 3000:3000 a1ad52c3728f  
+
+docker ps --all 
+docker exec -it asdfasdfs sh
+
+docker build . -t  myapp   
+docker build . -t  myapp:1.0  
+
+// nodemon on docker
+docker run -p 3005:3000 -v /usr/app/node_modules -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/application/nodejs:/usr/app myapp:2.1
+
+docker stop saldfjasljdf sdalfjqweou retyt[erl]
+
+docker build . -t mymongdb:1.0     
+docker run -d --name mymongdb mymongdb:1.0    
+docker exec -it mymongdb bash
+    mongo -u "admin" -p "1111" --authenticationDatabase "admin"
+    show database
+    use shoppers
+    show collections
+    db.products.find();
+    db.products.find().pretty();
+
+docker build . -t mynodejsapp:1.0  
+
+docker network create shoppers 
+docker network connect shoppers mymongdb  
+docker run -d --name mynodejsapp -p 3000:3000 -e DATABASE_USER=admin -e DATABASE_PASSWORD=1111 -e DATABASE_HOST=mymongodb --network shoppers mynodejsapp:1.0
+
+docker network inspect shoppers
+docker logs -f 2b45fabedad2   
