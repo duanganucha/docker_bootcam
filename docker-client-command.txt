@@ -22,7 +22,7 @@ docker run -d --name wordpress --network wordpress -p 888:80 -e WORDPRESS_DB_HOS
 
 docker network connect wordpress mysql
 docker network connect wordpress pma
-dock network inspect wordpress
+docker network inspect wordpress
 
 //-->> localhost:8888
 // server mysql
@@ -71,19 +71,21 @@ docker run -p 3000:3000 a1ad52c3728f
 docker ps --all 
 docker exec -it asdfasdfs sh
 
-docker build . -t  myapp   
-docker build . -t  myapp:1.0  
+docker build . -t  mynodejsapp   
+docker build . -t  mynodejsapp:1.0
+docker build . -t  mynodejsapp:1.1
 
 // nodemon on docker
-docker run -p 3005:3000 -v /usr/app/node_modules -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/application/nodejs:/usr/app myapp:2.1
+docker run -p 3005:3000 -v /usr/app/node_modules -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/application/nodejs:/usr/app mynodejsapp:1.0
 
 docker stop saldfjasljdf sdalfjqweou retyt[erl]
 
-docker build . -t mymongdb:1.0     
-docker run -d --name mymongdb mymongdb:1.0    
-docker exec -it mymongdb bash
+
+docker build . -t mymongodb:1.0     
+docker run -d --name mymongodb mymongodb:1.0    
+docker exec -it mymongodb bash
     mongo -u "admin" -p "1111" --authenticationDatabase "admin"
-    show database
+    show databases
     use shoppers
     show collections
     db.products.find();
@@ -91,9 +93,24 @@ docker exec -it mymongdb bash
 
 docker build . -t mynodejsapp:1.0  
 
+
+docker run -d --name mynodejsapp -p 3000:3000 -e DATABASE_USER=admin -e DATABASE_PASSWORD=1111 -e DATABASE_HOST=mymongodb --network shoppers mynodejsapp:1.1
+
+// ถ้าต้อง mout volume มาที่เครื่องเราเอง
+docker run -d --name mynodejsapp-mydisk -p 3005:3000 -v /usr/app/node_modules -v /Users/duanganuchabootchat/Desktop/DockerLearning/docker_bootcamp/application/nodejs:/usr/app -e DATABASE_USER=admin -e DATABASE_PASSWORD=1111 -e DATABASE_HOST=mymongodb --network shoppers mynodejsapp:1.1
+
 docker network create shoppers 
-docker network connect shoppers mymongdb  
-docker run -d --name mynodejsapp -p 3000:3000 -e DATABASE_USER=admin -e DATABASE_PASSWORD=1111 -e DATABASE_HOST=mymongodb --network shoppers mynodejsapp:1.0
+docker network connect shoppers mymongodb  
+
 
 docker network inspect shoppers
 docker logs -f 2b45fabedad2   
+
+// React
+docker build . -t myreactapp:1.0
+docker run -d --name myreactapp --network shoppers -p 3000:3000 myreactapp:1.0
+
+// build react and pack
+// สร้าง Dockerfile.prod
+docker build -f Dockerfile.prod . -t myreactapp:1.1
+docker run -d --name myreactapp_prod --network shoppers -p 3001:80 myreactapp:1.1

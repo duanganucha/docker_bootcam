@@ -17,3 +17,4 @@ db.products.insert({
       "unitPrice": "250",
       "thumbnail": "/images/product/3.jpg"
 });
+ 

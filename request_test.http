@@ -1,0 +1,27 @@
+
+GET http://localhost:3005/api/products HTTP/1.1
+ 
+ 
+ 
+
+###
+
+POST http://localhost:3005/api/products HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Test555",
+    "body":"Content",
+    "username":1231
+}
+
+###
+PUT  http://localhost:3005/api/products HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Te66666",
+    "body":"Content",
+    "username":1231
+}
+
